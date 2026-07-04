@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Labyrinth.Api/Labyrinth.Api.csproj" />
+    <Project Path="src/Labyrinth.Application/Labyrinth.Application.csproj" />
+    <Project Path="src/Labyrinth.Domain/Labyrinth.Domain.csproj" />
+    <Project Path="src/Labyrinth.Infrastructure/Labyrinth.Infrastructure.csproj" />
+    <Project Path="src/Labyrinth.Shared/Labyrinth.Shared.csproj" />
+    <Project Path="src/Labyrinth.UI/Labyrinth.UI.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Labyrinth.Tests/Labyrinth.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,38 @@
+# .NET build output
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+# SQLite databases
+*.db
+*.db-shm
+*.db-wal
+
+# Secrets / local env
+.env
+*.env
+!.env.example
+appsettings.*.local.json
+secrets.json
+
+# Claude Code local (machine-specific settings & permissions)
+.claude/settings.local.json
+
+# IDE
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Copyrighted source book — keep local only, do not publish
+Docs/*.pdf
+
+# Logs / temp
+*.log
+scratchpad/

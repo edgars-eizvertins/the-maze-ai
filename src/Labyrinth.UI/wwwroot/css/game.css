@@ -1,0 +1,138 @@
+/* ===== Лабиринт — dungeon theme ===== */
+:root {
+    --bg: #1a1410;
+    --panel: #271d16;
+    --panel2: #32261c;
+    --gold: #d8a657;
+    --ink: #e8ddccff;
+    --muted: #a89279;
+    --accent: #b5651d;
+    --danger: #d9534f;
+    --good: #6f9f4f;
+    --bad: #d9534f;
+    --border: #4a3826;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    margin: 0;
+}
+
+.laby-shell { min-height: 100vh; padding: 16px; }
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.4);
+}
+
+h1, h3 { color: var(--gold); margin-top: 0; }
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--panel2);
+    color: var(--ink);
+    padding: 9px 14px;
+    transition: filter .15s;
+}
+button:hover:not(:disabled) { filter: brightness(1.25); }
+button:disabled { opacity: .5; cursor: default; }
+
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: bold; }
+button.luck-btn { background: #3c5a2e; border-color: #4f7a3c; }
+button.flee { background: #5a3030; }
+button.link { background: none; border: none; color: var(--gold); text-decoration: underline; }
+
+input {
+    width: 100%;
+    padding: 9px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #1d1611;
+    color: var(--ink);
+    margin: 4px 0 10px;
+}
+
+.error { color: var(--danger); background: #3a1f1f; padding: 8px 12px; border-radius: 6px; margin: 10px 0; }
+.hint  { color: var(--muted); font-size: .9em; margin: 8px 0; }
+
+/* ===== Layout ===== */
+.game-layout { display: grid; grid-template-columns: 1fr 320px; gap: 16px; max-width: 1100px; margin: 0 auto; }
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: var(--gold); }
+@media (max-width: 860px) { .game-layout { grid-template-columns: 1fr; } }
+
+/* ===== Login ===== */
+.login-panel { max-width: 440px; margin: 6vh auto; text-align: center; }
+.login-panel h1 { letter-spacing: 4px; font-size: 2.4em; margin-bottom: 0; }
+.subtitle { color: var(--muted); margin-top: 4px; }
+.login-panel label { display: block; text-align: left; color: var(--muted); font-size: .85em; }
+.tabs { display: flex; gap: 8px; margin: 16px 0; }
+.tabs button { flex: 1; }
+.tabs button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.elixirs { display: flex; gap: 8px; }
+.elixirs .elixir { flex: 1; }
+.elixir.active { background: var(--gold); color: #2a1d10; border-color: var(--gold); font-weight: bold; }
+.login-panel .primary { width: 100%; margin-top: 16px; }
+
+/* ===== Narrative & choices ===== */
+.section-head { display: flex; justify-content: space-between; align-items: center; }
+.badge { background: var(--panel2); border: 1px solid var(--border); color: var(--gold); padding: 2px 10px; border-radius: 20px; font-size: .8em; }
+.narrative { line-height: 1.65; font-size: 1.05em; white-space: pre-wrap; }
+.choices { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.choice { display: flex; justify-content: space-between; align-items: center; text-align: left; }
+.choice .ch-target { color: var(--muted); font-size: .85em; }
+
+/* ===== Combat ===== */
+.combat { margin-top: 12px; }
+.fighters { display: flex; align-items: center; justify-content: space-around; gap: 10px; }
+.fighter { background: var(--panel2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; text-align: center; min-width: 110px; }
+.fighter.monster { border-color: #7a3b3b; }
+.fighter.hero { border-color: #3b5a7a; }
+.fname { font-weight: bold; color: var(--gold); margin-bottom: 4px; }
+.vs { color: var(--muted); font-weight: bold; }
+.round { background: #1d1611; border-left: 3px solid var(--accent); padding: 8px 12px; margin: 8px 0; border-radius: 4px; font-size: .95em; }
+.round-out { margin-top: 4px; }
+.round-out .good, .good { color: var(--good); }
+.round-out .bad, .bad { color: var(--bad); }
+.round-out .luck { margin-left: 8px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+/* ===== Ending ===== */
+.ending { padding: 14px; border-radius: 8px; text-align: center; font-weight: bold; font-size: 1.1em; margin: 12px 0; }
+.ending.victory { background: #2e4020; color: #b7e08a; border: 1px solid var(--good); }
+.ending.death { background: #3a1f1f; color: #e9a; border: 1px solid var(--danger); }
+
+/* ===== Toolbar / manual adjust ===== */
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 12px; }
+.adjust { margin-top: 12px; background: #1d1611; border-radius: 8px; padding: 12px; }
+.adj-row { display: flex; align-items: center; gap: 6px; margin: 6px 0; }
+.adj-row span { min-width: 130px; color: var(--muted); }
+.adj-row input { margin: 0; }
+
+/* ===== Stats panel ===== */
+.attr { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dotted var(--border); }
+.attr b.danger { color: var(--danger); }
+.inv { margin-top: 10px; }
+.inv-title { color: var(--muted); font-size: .85em; margin-bottom: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: var(--panel2); border: 1px solid var(--border); border-radius: 14px; padding: 2px 10px; font-size: .85em; }
+.chip.item { border-color: var(--gold); color: var(--gold); }
+
+/* ===== Map panel ===== */
+.map-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+.node { background: var(--panel2); border: 1px solid var(--border); border-radius: 6px; padding: 2px 8px; font-size: .8em; font-family: monospace; }
+.node.current { background: var(--gold); color: #2a1d10; font-weight: bold; }
+
+.loading { text-align: center; color: var(--muted); margin: 10vh auto; max-width: 300px; }
+.spinner { animation: spin 1.2s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }

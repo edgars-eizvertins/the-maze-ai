@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Data\game_data.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Labyrinth.Infrastructure\Labyrinth.Infrastructure.csproj" />
+    <ProjectReference Include="..\Labyrinth.Application\Labyrinth.Application.csproj" />
+    <ProjectReference Include="..\Labyrinth.Domain\Labyrinth.Domain.csproj" />
+    <ProjectReference Include="..\Labyrinth.Shared\Labyrinth.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

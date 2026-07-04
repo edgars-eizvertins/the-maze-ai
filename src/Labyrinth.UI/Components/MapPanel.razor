@@ -1,0 +1,18 @@
+@* Map of already-investigated sections, in visit order, current one highlighted. *@
+
+@if (State is not null)
+{
+    <div class="panel map-panel">
+        <h3>🗺️ Карта (@State.VisitedSections.Count)</h3>
+        <div class="map-grid">
+            @foreach (var s in State.VisitedSections)
+            {
+                <span class="node @(s == State.CurrentSection ? "current" : "")">@s</span>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public GameStateDto? State { get; set; }
+}

@@ -1,0 +1,56 @@
+@* Registration / login with elixir selection. *@
+@inject GameSession Session
+
+<div class="panel login-panel">
+    <h1>ЛАБИРИНТ</h1>
+    <p class="subtitle">приключенческая игра-роман</p>
+
+    <div class="tabs">
+        <button class="@(Mode == "login" ? "active" : "")" @onclick='() => Mode = "login"'>Вход</button>
+        <button class="@(Mode == "register" ? "active" : "")" @onclick='() => Mode = "register"'>Новый герой</button>
+    </div>
+
+    <label>Имя героя</label>
+    <input @bind="_name" maxlength="32" placeholder="Введите имя" />
+
+    <label>PIN (не короче 4 символов)</label>
+    <input @bind="_pin" type="password" maxlength="32" placeholder="••••" />
+
+    @if (Mode == "register")
+    {
+        <label>Выбери эликсир</label>
+        <div class="elixirs">
+            @foreach (var (val, ru) in Elixirs)
+            {
+                <button class="elixir @(_elixir == val ? "active" : "")" @onclick="() => _elixir = val">@ru</button>
+            }
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Session.LastError))
+    {
+        <div class="error">@Session.LastError</div>
+    }
+
+    <button class="primary" disabled="@Session.Busy" @onclick="Submit">
+        @(Mode == "login" ? "Войти" : "Начать путешествие")
+    </button>
+</div>
+
+@code {
+    private string Mode = "login";
+    private string _name = "";
+    private string _pin = "";
+    private string _elixir = "Agility";
+
+    private static readonly (string val, string ru)[] Elixirs =
+    {
+        ("Agility", "Ловкости"), ("Endurance", "Выносливости"), ("Luck", "Счастья")
+    };
+
+    private async Task Submit()
+    {
+        if (Mode == "login") await Session.LoginAsync(_name.Trim(), _pin);
+        else await Session.RegisterAsync(_name.Trim(), _pin, _elixir);
+    }
+}

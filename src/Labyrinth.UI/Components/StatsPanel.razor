@@ -1,0 +1,36 @@
+@* Always-visible character sheet: attributes, gold, food, elixir, inventory. *@
+
+@if (State is not null)
+{
+    <div class="panel stats-panel">
+        <h3>📊 Признаки</h3>
+        <div class="attr"><span>Ловкость (Л)</span><b>@State.Agility.Current / @State.Agility.Initial</b></div>
+        <div class="attr"><span>Выносливость (В)</span><b class="@(State.Endurance.Current <= 4 ? "danger" : "")">@State.Endurance.Current / @State.Endurance.Initial</b></div>
+        <div class="attr"><span>Счастье (С)</span><b>@State.Luck.Current / @State.Luck.Initial</b></div>
+
+        <h3>🎒 Снаряжение</h3>
+        <div class="attr"><span>💰 Золото</span><b>@State.Gold</b></div>
+        <div class="attr"><span>🍖 Еда</span><b>@State.Food</b></div>
+        <div class="attr"><span>⚗️ Эликсир</span><b>@ElixirName(State.ElixirType) (@State.ElixirUsesLeft)</b></div>
+
+        <div class="inv">
+            <div class="inv-title">Оружие/вещи:</div>
+            <div class="chips">
+                @foreach (var e in State.Equipment) { <span class="chip">@e</span> }
+                @foreach (var i in State.Items) { <span class="chip item">@i</span> }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public GameStateDto? State { get; set; }
+
+    private static string ElixirName(string? type) => type switch
+    {
+        "Agility" => "Ловкости",
+        "Endurance" => "Выносливости",
+        "Luck" => "Счастья",
+        _ => "—"
+    };
+}

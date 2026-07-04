@@ -1,0 +1,43 @@
+@page "/"
+@implements IDisposable
+@inject GameSession Session
+
+<PageTitle>Лабиринт</PageTitle>
+
+@if (!_restored)
+{
+    <div class="panel loading">Загрузка...</div>
+}
+else if (!Session.IsAuthenticated)
+{
+    <LoginPanel />
+}
+else
+{
+    <div class="game-layout">
+        <div class="main-col">
+            <div class="topbar">
+                <span>🧙 @Session.PlayerName</span>
+                <button class="link" @onclick="() => Session.LogoutAsync()">Выйти</button>
+            </div>
+            <GameView />
+        </div>
+        <aside class="side-col">
+            <StatsPanel State="Session.Turn?.State" />
+            <MapPanel State="Session.Turn?.State" />
+        </aside>
+    </div>
+}
+
+@code {
+    private bool _restored;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Session.OnChange += StateHasChanged;
+        await Session.TryRestoreAsync();
+        _restored = true;
+    }
+
+    public void Dispose() => Session.OnChange -= StateHasChanged;
+}

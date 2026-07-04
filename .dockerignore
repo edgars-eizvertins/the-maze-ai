@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+**/.vs/
+**/*.user
+Docs/
+memory/
+*.db
+*.db-*
+.git/
+.env
+scratchpad/
+game_sections.json

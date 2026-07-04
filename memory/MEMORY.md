@@ -1,0 +1,1 @@
+- [Лабиринт project](project_labyrinth.md) — gamebook turned .NET 10 Blazor WASM + API + SQLite web app; Docker/RPI; rules from PDF, GM text Russian

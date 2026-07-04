@@ -1,0 +1,31 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: src/Labyrinth.Api/Dockerfile
+    image: labyrinth-api:latest
+    restart: unless-stopped
+    environment:
+      # Override the placeholder secret from appsettings.json. Set in .env
+      - Jwt__Key=${JWT_KEY:?Set JWT_KEY in .env}
+      - Labyrinth__SqliteConnectionString=Data Source=/data/labyrinth.db
+      # API is reached only through the UI's nginx proxy, so no public CORS origins needed.
+      - Labyrinth__CorsOrigins__0=http://localhost:8090
+    volumes:
+      - labyrinth-data:/data
+    expose:
+      - "8080"
+
+  ui:
+    build:
+      context: .
+      dockerfile: src/Labyrinth.UI/Dockerfile
+    image: labyrinth-ui:latest
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "${UI_PORT:-8090}:8080"
+
+volumes:
+  labyrinth-data:

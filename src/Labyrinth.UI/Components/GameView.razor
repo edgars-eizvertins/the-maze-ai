@@ -1,0 +1,177 @@
+@* Main play surface: narrative + choices, or the combat panel, or the ending. *@
+@inject GameSession Session
+
+@if (Turn is not null)
+{
+    var sec = Turn.Section;
+    var state = Turn.State;
+
+    <div class="panel game-panel">
+        <div class="section-head">
+            <span class="badge">Раздел @sec.Id</span>
+            @if (Session.Busy) { <span class="spinner">⏳</span> }
+        </div>
+
+        <p class="narrative">@sec.Text</p>
+
+        @if (!string.IsNullOrEmpty(Session.LastError))
+        {
+            <div class="error">@Session.LastError</div>
+        }
+
+        @* ---------------- Ending ---------------- *@
+        @if (state.IsFinished)
+        {
+            <div class="ending @(state.Outcome == "victory" ? "victory" : "death")">
+                @(state.Outcome == "victory"
+                    ? "🏆 ПОБЕДА! Ты раскрыл Великую Тайну подземелья!"
+                    : "💀 КОНЕЦ ПУТЕШЕСТВИЯ.")
+            </div>
+            <button class="primary" @onclick="() => Session.RestartAsync(null)">Начать заново</button>
+        }
+        @* ---------------- Combat ---------------- *@
+        else if (Turn.Combat is not null && !Turn.Combat.Finished)
+        {
+            var c = Turn.Combat;
+            <div class="combat">
+                <h3>⚔️ Битва</h3>
+                <div class="fighters">
+                    <div class="fighter monster">
+                        <div class="fname">@c.MonsterName</div>
+                        <div>Л: @c.MonsterAgility</div>
+                        <div>В: <b>@c.MonsterEnduranceCurrent</b> / @c.MonsterEnduranceMax</div>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="fighter hero">
+                        <div class="fname">Ты</div>
+                        <div>Л: @state.Agility.Current</div>
+                        <div>В: <b class="@(state.Endurance.Current <= 4 ? "danger" : "")">@state.Endurance.Current</b> / @state.Endurance.Initial</div>
+                    </div>
+                </div>
+
+                @if (c.MonstersRemaining > 1)
+                {
+                    <div class="hint">Противников осталось: @c.MonstersRemaining</div>
+                }
+
+                @foreach (var r in c.Rounds)
+                {
+                    <div class="round">
+                        <div>🎲 Чудовище: @r.MonsterDice + Л@c.MonsterAgility = <b>@r.MonsterAttack</b></div>
+                        <div>🎲 Ты: @r.PlayerDice + Л@state.Agility.Current = <b>@r.PlayerAttack</b></div>
+                        <div class="round-out">
+                            @if (r.Outcome == "player_hit") { <span class="good">Ты ранил! −@r.DamageToMonster чудовищу</span> }
+                            else if (r.Outcome == "monster_hit") { <span class="bad">Тебя ранили! −@r.DamageToPlayer</span> }
+                            else { <span>Ничья — раунд повторяется</span> }
+                            @if (r.LuckUsed) { <span class="luck">@(r.LuckSucceeded ? "🍀 Счастье!" : "❌ Не повезло")</span> }
+                        </div>
+                    </div>
+                }
+
+                <div class="actions">
+                    <button class="primary" disabled="@Session.Busy" @onclick="() => Session.CombatRoundAsync(false)">Атаковать</button>
+                    <button class="luck-btn" disabled="@Session.Busy" @onclick="() => Session.CombatRoundAsync(true)">Атаковать + ССС 🍀</button>
+                    @if (c.CanFlee)
+                    {
+                        <button class="flee" disabled="@Session.Busy" @onclick="() => Session.FleeAsync()">Бежать (−2В)</button>
+                    }
+                </div>
+            </div>
+        }
+        @* ---------------- Choices ---------------- *@
+        else
+        {
+            @if (Turn.Combat is { Finished: true, Won: true })
+            {
+                <div class="ending victory">🏆 Чудовище повержено!</div>
+            }
+            <div class="choices">
+                @foreach (var ch in sec.Choices)
+                {
+                    <button class="choice" disabled="@Session.Busy" @onclick="() => Session.ChooseAsync(ch.Target)">
+                        <span class="ch-label">@ch.Label</span>
+                        <span class="ch-target">→ @ch.Target</span>
+                    </button>
+                }
+                @if (sec.Choices.Count == 0)
+                {
+                    <div class="hint">Нет доступных переходов в этом разделе.</div>
+                }
+            </div>
+        }
+
+        @* ---------------- Action bar ---------------- *@
+        @if (!state.IsFinished)
+        {
+            <div class="toolbar">
+                @if (sec.CanEat && state.Food > 0)
+                {
+                    <button @onclick="() => Session.EatAsync()">🍖 Поесть (+4В)</button>
+                }
+                @if (state.ElixirUsesLeft > 0)
+                {
+                    <button @onclick="() => Session.ElixirAsync()">⚗️ Эликсир</button>
+                }
+                <button @onclick="() => _showAdjust = !_showAdjust">✏️ Изменить вручную</button>
+            </div>
+
+            @if (_showAdjust)
+            {
+                <div class="adjust">
+                    <div class="hint">Книга иногда просит изменить показатели вручную (золото, очки, предметы).</div>
+                    <div class="adj-row">
+                        <span>💰 Золото</span>
+                        <button @onclick='() => Session.AdjustAsync("Gold", -1)'>−1</button>
+                        <button @onclick='() => Session.AdjustAsync("Gold", 1)'>+1</button>
+                        <button @onclick='() => Session.AdjustAsync("Gold", 5)'>+5</button>
+                    </div>
+                    @foreach (var (kind, ru) in Attrs)
+                    {
+                        <div class="adj-row">
+                            <span>@ru</span>
+                            <button @onclick="() => Session.AdjustAsync(kind, -1)">−1</button>
+                            <button @onclick="() => Session.AdjustAsync(kind, 1)">+1</button>
+                            <button @onclick="() => Session.AdjustAsync(kind, 2)">+2</button>
+                        </div>
+                    }
+                    <div class="adj-row">
+                        <input @bind="_itemName" placeholder="название предмета" />
+                        <button @onclick="AddItem">+ предмет</button>
+                        <button @onclick="RemoveItem">− предмет</button>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
+
+@code {
+    private bool _showAdjust;
+    private string _itemName = "";
+
+    private TurnDto? Turn => Session.Turn;
+
+    private static readonly (string kind, string ru)[] Attrs =
+    {
+        ("Agility", "Ловкость (Л)"), ("Endurance", "Выносливость (В)"),
+        ("Luck", "Счастье (С)"), ("Food", "Еда")
+    };
+
+    private async Task AddItem()
+    {
+        if (!string.IsNullOrWhiteSpace(_itemName))
+        {
+            await Session.AdjustAsync("AddItem", 0, _itemName.Trim());
+            _itemName = "";
+        }
+    }
+
+    private async Task RemoveItem()
+    {
+        if (!string.IsNullOrWhiteSpace(_itemName))
+        {
+            await Session.AdjustAsync("RemoveItem", 0, _itemName.Trim());
+            _itemName = "";
+        }
+    }
+}
