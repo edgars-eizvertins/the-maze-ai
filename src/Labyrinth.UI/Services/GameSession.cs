@@ -59,6 +59,7 @@ public sealed class GameSession
     // ---- Game actions ----
     public Task RefreshAsync() => RunAsync(() => _api.GetTurnAsync());
     public Task ChooseAsync(int target) => RunAsync(() => _api.ChooseAsync(target));
+    public Task GoToAsync(int target) => RunAsync(() => _api.GoToAsync(target));
     public Task CombatRoundAsync(bool useLuck) => RunAsync(() => _api.CombatRoundAsync(useLuck));
     public Task FleeAsync() => RunAsync(() => _api.FleeAsync());
     public Task EatAsync() => RunAsync(() => _api.EatAsync());

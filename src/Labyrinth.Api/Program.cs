@@ -64,6 +64,16 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapGet("/", () => Results.Ok(new
+{
+    service = "Labyrinth API",
+    status = "running",
+    docs = app.Environment.IsDevelopment() ? "/openapi/v1.json" : null,
+    health = "/health"
+}));
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+
+app.Lifetime.ApplicationStarted.Register(() =>
+    app.Logger.LogInformation("Labyrinth API listening on {Urls}", string.Join(", ", app.Urls)));
 
 app.Run();

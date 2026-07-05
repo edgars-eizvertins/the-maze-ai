@@ -56,6 +56,28 @@ public sealed class GameService
         return ServiceResult<TurnDto>.Ok(BuildTurn(state));
     }
 
+    /// <summary>
+    /// Jump to an explicit section the reader is told to note down and return to
+    /// ("запиши этот номер … а потом N") or that the book asks to compute (e.g. §76,
+    /// the sum of the three keys). Honour-based, like the manual adjustments — it is
+    /// how the printed book is played and is the only way past the "note-the-number"
+    /// return sections such as §315.
+    /// </summary>
+    public async Task<ServiceResult<TurnDto>> GoToAsync(string player, int target, CancellationToken ct = default)
+    {
+        var acc = await _store.FindAsync(player, ct);
+        if (acc is null) return ServiceResult<TurnDto>.Fail("Игрок не найден.");
+        var state = acc.State;
+
+        if (state.IsFinished) return ServiceResult<TurnDto>.Fail("Игра окончена. Начните заново.");
+        if (state.InCombat) return ServiceResult<TurnDto>.Fail("Сначала заверши битву.");
+        if (!_sections.Exists(target)) return ServiceResult<TurnDto>.Fail($"Раздела {target} не существует.");
+
+        MoveTo(state, target);
+        await _store.SaveStateAsync(player, state, ct);
+        return ServiceResult<TurnDto>.Ok(BuildTurn(state));
+    }
+
     // ---- Combat ----------------------------------------------------------
     public async Task<ServiceResult<TurnDto>> CombatRoundAsync(string player, bool useLuck, CancellationToken ct = default)
     {

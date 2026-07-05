@@ -41,6 +41,13 @@ If you change `game_data.json`, also copy it to `src/Labyrinth.Api/Data/game_dat
 
 The parser/enhancer scripts live in the scratchpad (not committed). The enhancer:
 - targets: `см. N`, plus `то/иначе/тогда N` (the one bare case is 200→301).
+  **Watch OCR "см" variants** or sections dead-end: Latin `c` in `cм.` (16,19,26,45,
+  46,47,49,54,56,68,73), comma punctuation `см,` / `см.,` (89,316), and no-space
+  `см.87` (368). These were hand-patched into `game_data.json` (§14,27,41,164,365 too).
+  §76 (go to the sum of your 3 keys) and §315 (die-roll subroutine; caller says
+  "…а потом N") have **no fixed target by design** — reached via the manual "go to
+  section" control (`POST /api/game/goto`), not choices. Large parts of the book,
+  incl. victory §387, are only reachable through those note-the-number return jumps.
 - combat: parses all `NAME NЛ, MВ` (handles OCR `З`→3, `О`→0); multi-monster
   sections 238/277/312; flee target from "бегством … см. N".
 - labels: direction words → "На север/юг/запад/восток"; yes/no; else trimmed phrase.

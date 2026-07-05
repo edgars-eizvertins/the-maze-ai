@@ -46,6 +46,9 @@ public sealed class ApiClient
     public Task<(TurnDto? data, string? error)> ChooseAsync(int target) =>
         PostAsync<TurnDto>("api/game/choose", new ChooseRequest(target));
 
+    public Task<(TurnDto? data, string? error)> GoToAsync(int target) =>
+        PostAsync<TurnDto>("api/game/goto", new GotoRequest(target));
+
     public Task<(TurnDto? data, string? error)> CombatRoundAsync(bool useLuck) =>
         PostAsync<TurnDto>("api/game/combat/round", new CombatRoundRequest(useLuck));
 

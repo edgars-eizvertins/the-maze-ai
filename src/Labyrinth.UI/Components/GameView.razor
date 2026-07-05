@@ -113,7 +113,19 @@
                     <button @onclick="() => Session.ElixirAsync()">⚗️ Эликсир</button>
                 }
                 <button @onclick="() => _showAdjust = !_showAdjust">✏️ Изменить вручную</button>
+                <span class="goto">
+                    <input type="number" min="1" max="387" @bind="_gotoTarget" placeholder="№" />
+                    <button disabled="@Session.Busy" @onclick="GoTo">↪️ Перейти к разделу</button>
+                </span>
             </div>
+
+            @if (sec.Choices.Count == 0 && Turn.Combat is null or { Finished: true })
+            {
+                <div class="hint">
+                    Книга просит записать номер и перейти к нему вручную
+                    (например «…а потом N» или §76 — сумма ключей). Введи номер раздела выше.
+                </div>
+            }
 
             @if (_showAdjust)
             {
@@ -148,8 +160,18 @@
 @code {
     private bool _showAdjust;
     private string _itemName = "";
+    private int? _gotoTarget;
 
     private TurnDto? Turn => Session.Turn;
+
+    private async Task GoTo()
+    {
+        if (_gotoTarget is int n && n is >= 1 and <= 387)
+        {
+            await Session.GoToAsync(n);
+            _gotoTarget = null;
+        }
+    }
 
     private static readonly (string kind, string ru)[] Attrs =
     {

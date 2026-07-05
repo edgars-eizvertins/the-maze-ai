@@ -70,4 +70,5 @@ public record CombatStateDto(
 
 // ---- Action requests -----------------------------------------------------
 public record ChooseRequest(int Target);
+public record GotoRequest(int Target);
 public record CombatRoundRequest(bool UseLuck);

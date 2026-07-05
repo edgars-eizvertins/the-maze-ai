@@ -31,6 +31,12 @@ public sealed class GameController : ControllerBase
     public async Task<ActionResult<TurnDto>> Choose(ChooseRequest req, CancellationToken ct)
         => Respond(await _game.ChooseAsync(Player, req.Target, ct));
 
+    /// <summary>Jump to a section the book tells the reader to note down and go to
+    /// (the "запиши номер … а потом N" return sections and the computed §76).</summary>
+    [HttpPost("goto")]
+    public async Task<ActionResult<TurnDto>> Goto(GotoRequest req, CancellationToken ct)
+        => Respond(await _game.GoToAsync(Player, req.Target, ct));
+
     /// <summary>Resolve one combat round (optionally performing ССС).</summary>
     [HttpPost("combat/round")]
     public async Task<ActionResult<TurnDto>> CombatRound(CombatRoundRequest req, CancellationToken ct)
