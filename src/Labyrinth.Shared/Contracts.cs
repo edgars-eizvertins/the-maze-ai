@@ -38,8 +38,13 @@ public record SectionDto(
     bool IsDeath,
     bool HasCombat);
 
+/// <summary>One step the engine resolved automatically on the way to the current
+/// section (a dice roll, a ССС luck check, or a "visited before?" branch).</summary>
+public record AutoStepDto(int Section, string Kind, string Text, string Detail, int? Target);
+
 /// <summary>Everything the UI needs to render a turn in one payload.</summary>
-public record TurnDto(SectionDto Section, GameStateDto State, CombatStateDto? Combat);
+public record TurnDto(SectionDto Section, GameStateDto State, CombatStateDto? Combat,
+    IReadOnlyList<AutoStepDto> AutoSteps);
 
 // ---- Combat --------------------------------------------------------------
 public record RoundResultDto(

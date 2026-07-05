@@ -12,6 +12,24 @@
             @if (Session.Busy) { <span class="spinner">⏳</span> }
         </div>
 
+        @* What the game resolved for you on the way here (dice / ССС / "был ли тут"). *@
+        @if (Turn.AutoSteps.Count > 0)
+        {
+            <div class="auto-log">
+                @foreach (var st in Turn.AutoSteps)
+                {
+                    <div class="auto-step @st.Kind">
+                        <span class="auto-src">Раздел @st.Section:</span>
+                        @if (!string.IsNullOrEmpty(st.Text))
+                        {
+                            <span class="auto-text">@st.Text</span>
+                        }
+                        <span class="auto-detail">@st.Detail</span>
+                    </div>
+                }
+            </div>
+        }
+
         <p class="narrative">@sec.Text</p>
 
         @if (!string.IsNullOrEmpty(Session.LastError))

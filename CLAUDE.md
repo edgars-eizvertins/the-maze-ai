@@ -67,8 +67,37 @@ The parser/enhancer scripts live in the scratchpad (not committed). The enhancer
 
 The engine auto-applies only what it can do reliably: combat, ССС, eat, elixir.
 Inline narrative effects (gold, ±attributes, item pickups) are **not auto-parsed**
-(too conditional/risky). The UI provides manual +/- controls so the player applies
-them by hand — faithful to the printed book ("честность перед самим собой").
+(too conditional/risky). The UI provides manual +/- controls (collapsed behind
+"✏️ Изменить вручную" — a hidden override) so the player applies them by hand —
+faithful to the printed book ("честность перед самим собой").
+
+### Auto-resolved navigation branches (`auto` field in game_data.json)
+
+So the player only ever makes *real* decisions, sections whose only "choice" is a
+mechanic the engine can do itself carry an optional `auto` block, resolved in
+`GameService.MoveTo` on arrival (chained, depth-capped) and surfaced to the UI as
+`TurnDto.AutoSteps` (each keeps the source section's text so no narrative is lost):
+- `{"kind":"dice","diceCount":N,"op":"gte|lte","value":V,"onTrue":A,"onFalse":B}` — §112.
+- `{"kind":"luck","onSuccess":A,"onFail":B}` — narrative ССС (rolls, −1 luck, branches):
+  30,36,41,62,126,138,149,225,229,242,274.
+- `{"kind":"visited","onVisited":A,"onFirst":B|null}` — "был ли ты тут?" via visit
+  history: 38,53,99,125,310,331; §164 uses `onFirst:null` (stay & show real choices,
+  auto-jump only on revisit). §290 was removed from §164's choices.
+Sections whose branch is entangled with a stat/gold effect (gambling rolls, prereq
+jumps) are **left manual** until stat-automation is done.
+
+### Auto-applied effects (`effects` field in game_data.json)
+
+Unconditional stat/gold/item changes are applied on arrival in `GameService.MoveTo`
+(before auto-resolve) via `ApplyAdjustment` — the same code the manual controls use —
+and logged as `effect` steps in `TurnDto.AutoSteps`. Shape:
+`"effects":[{"kind":"endurance","delta":-1},{"kind":"addItem","text":"ключ №12"}]`
+(kinds: agility|endurance|luck|gold|food|addItem|removeItem). Encoded so far (18):
+13,19,26,56,88,96,153,163,193,198,223,244,263,291,306,318,326,376.
+**Only encode effects with NO "если"/dice/visited condition** — conditional ones stay
+on the manual override. Partial encodes are noted in the patch (§193 skips the
+per-monster gold; §153 skips the unmodelled "+1 to attack" sword bonus). Attributes
+cap at their initial value (via `AttributeScore`); food caps at 8; gold floors at 0.
 
 ## Build / run / test
 

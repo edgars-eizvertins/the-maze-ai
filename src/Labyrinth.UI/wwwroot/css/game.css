@@ -136,3 +136,24 @@ input {
 .loading { text-align: center; color: var(--muted); margin: 10vh auto; max-width: 300px; }
 .spinner { animation: spin 1.2s linear infinite; display: inline-block; }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* Auto-resolved steps (dice / ССС / visited) the engine performed for the player */
+.auto-log { margin: 10px 0; display: flex; flex-direction: column; gap: 8px; }
+.auto-step {
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    background: var(--panel2);
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+.auto-step.luck    { border-left-color: var(--good); }
+.auto-step.visited { border-left-color: var(--accent); }
+.auto-step.dice    { border-left-color: var(--gold); }
+.auto-step.effect  { border-left-color: var(--danger); }
+.auto-src    { color: var(--muted); font-size: .8em; }
+.auto-text   { display: block; color: var(--ink); font-size: .92em; margin: 2px 0; opacity: .85; }
+.auto-detail { display: block; color: var(--gold); font-weight: bold; }
+
+/* Manual "go to section" control */
+.goto { display: inline-flex; gap: 6px; align-items: center; }
+.goto input { width: 72px; }

@@ -235,7 +235,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": -2
+        }
+      ]
     },
     "14": {
       "id": 14,
@@ -341,7 +347,17 @@
       "hasLuckCheck": false,
       "canEat": true,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "food",
+          "delta": 1
+        },
+        {
+          "kind": "luck",
+          "delta": 2
+        }
+      ]
     },
     "20": {
       "id": 20,
@@ -470,7 +486,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "gold",
+          "delta": 5
+        }
+      ]
     },
     "27": {
       "id": 27,
@@ -542,7 +564,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 159,
+        "onFail": 342
+      }
     },
     "31": {
       "id": 31,
@@ -639,7 +666,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 186,
+        "onFail": 158
+      }
     },
     "36": {
       "id": 36,
@@ -658,7 +690,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 152,
+        "onFail": 176
+      }
     },
     "37": {
       "id": 37,
@@ -688,7 +725,12 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "visited",
+        "onVisited": 167,
+        "onFirst": 328
+      }
     },
     "39": {
       "id": 39,
@@ -749,7 +791,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 348,
+        "onFail": 221
+      }
     },
     "42": {
       "id": 42,
@@ -957,7 +1004,12 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "visited",
+        "onVisited": 322,
+        "onFirst": 299
+      }
     },
     "54": {
       "id": 54,
@@ -1002,7 +1054,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": -1
+        }
+      ]
     },
     "57": {
       "id": 57,
@@ -1091,7 +1149,7 @@
       ],
       "combat": null,
       "hasLuckCheck": false,
-      "canEat": false,
+      "canEat": true,
       "isVictory": false,
       "isDeath": false
     },
@@ -1112,7 +1170,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 201,
+        "onFail": 145
+      }
     },
     "63": {
       "id": 63,
@@ -1589,7 +1652,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": -2
+        }
+      ]
     },
     "89": {
       "id": 89,
@@ -1731,7 +1800,18 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "addItem",
+          "delta": 0,
+          "text": "ключ №12"
+        },
+        {
+          "kind": "luck",
+          "delta": 2
+        }
+      ]
     },
     "97": {
       "id": 97,
@@ -1794,7 +1874,12 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "visited",
+        "onVisited": 259,
+        "onFirst": 182
+      }
     },
     "100": {
       "id": 100,
@@ -2043,7 +2128,15 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "dice",
+        "diceCount": 2,
+        "op": "gte",
+        "value": 18,
+        "onTrue": 28,
+        "onFalse": 291
+      }
     },
     "113": {
       "id": 113,
@@ -2276,7 +2369,12 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "visited",
+        "onVisited": 261,
+        "onFirst": 231
+      }
     },
     "126": {
       "id": 126,
@@ -2295,7 +2393,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 309,
+        "onFail": 244
+      }
     },
     "127": {
       "id": 127,
@@ -2491,7 +2594,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 361,
+        "onFail": 255
+      }
     },
     "139": {
       "id": 139,
@@ -2672,7 +2780,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 76,
+        "onFail": 352
+      }
     },
     "150": {
       "id": 150,
@@ -2744,7 +2857,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "luck",
+          "delta": 1
+        }
+      ]
     },
     "154": {
       "id": 154,
@@ -2924,7 +3043,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "luck",
+          "delta": 1
+        }
+      ]
     },
     "164": {
       "id": 164,
@@ -2935,10 +3060,6 @@
           "label": "Да"
         },
         {
-          "target": 290,
-          "label": "Уже был здесь"
-        },
-        {
           "target": 302,
           "label": "будешь смотреть"
         }
@@ -2947,7 +3068,12 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "visited",
+        "onVisited": 290,
+        "onFirst": null
+      }
     },
     "165": {
       "id": 165,
@@ -3482,7 +3608,17 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "agility",
+          "delta": 2
+        },
+        {
+          "kind": "luck",
+          "delta": 2
+        }
+      ]
     },
     "194": {
       "id": 194,
@@ -3561,7 +3697,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": -1
+        }
+      ]
     },
     "199": {
       "id": 199,
@@ -4016,7 +4158,14 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "removeItem",
+          "delta": 0,
+          "text": "кол"
+        }
+      ]
     },
     "224": {
       "id": 224,
@@ -4054,7 +4203,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 186,
+        "onFail": 3
+      }
     },
     "226": {
       "id": 226,
@@ -4122,7 +4276,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 66,
+        "onFail": 19
+      }
     },
     "230": {
       "id": 230,
@@ -4366,7 +4525,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 233,
+        "onFail": 111
+      }
     },
     "243": {
       "id": 243,
@@ -4400,7 +4564,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": -1
+        }
+      ]
     },
     "245": {
       "id": 245,
@@ -4723,7 +4893,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": -2
+        }
+      ]
     },
     "264": {
       "id": 264,
@@ -4932,7 +5108,12 @@
       "hasLuckCheck": true,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "luck",
+        "onSuccess": 210,
+        "onFail": 174
+      }
     },
     "275": {
       "id": 275,
@@ -5244,7 +5425,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": -2
+        }
+      ]
     },
     "292": {
       "id": 292,
@@ -5505,7 +5692,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "luck",
+          "delta": 2
+        }
+      ]
     },
     "307": {
       "id": 307,
@@ -5597,7 +5790,12 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "visited",
+        "onVisited": 67,
+        "onFirst": 17
+      }
     },
     "311": {
       "id": 311,
@@ -5749,7 +5947,17 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": -3
+        },
+        {
+          "kind": "agility",
+          "delta": -2
+        }
+      ]
     },
     "319": {
       "id": 319,
@@ -5889,7 +6097,17 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "gold",
+          "delta": 30
+        },
+        {
+          "kind": "luck",
+          "delta": 2
+        }
+      ]
     },
     "327": {
       "id": 327,
@@ -5972,7 +6190,12 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "auto": {
+        "kind": "visited",
+        "onVisited": 59,
+        "onFirst": 11
+      }
     },
     "332": {
       "id": 332,
@@ -6792,7 +7015,17 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "agility",
+          "delta": 1
+        },
+        {
+          "kind": "luck",
+          "delta": 2
+        }
+      ]
     },
     "377": {
       "id": 377,

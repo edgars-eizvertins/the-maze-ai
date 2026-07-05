@@ -51,7 +51,23 @@ public sealed class JsonSectionRepository : ISectionRepository
             Monsters = j.Combat.Monsters
                 .Select(m => new MonsterContent { Name = m.Name, Agility = m.Agility, Endurance = m.Endurance })
                 .ToList()
-        }
+        },
+        Auto = j.Auto is null ? null : new AutoResolveContent
+        {
+            Kind = j.Auto.Kind,
+            DiceCount = j.Auto.DiceCount,
+            Op = j.Auto.Op ?? "",
+            Value = j.Auto.Value,
+            OnTrue = j.Auto.OnTrue,
+            OnFalse = j.Auto.OnFalse,
+            OnSuccess = j.Auto.OnSuccess,
+            OnFail = j.Auto.OnFail,
+            OnVisited = j.Auto.OnVisited,
+            OnFirst = j.Auto.OnFirst
+        },
+        Effects = j.Effects is null
+            ? []
+            : j.Effects.Select(e => new EffectContent { Kind = e.Kind, Delta = e.Delta, Text = e.Text }).ToList()
     };
 
     private static readonly JsonSerializerOptions Opts = new(JsonSerializerDefaults.Web);
@@ -67,7 +83,26 @@ public sealed class JsonSectionRepository : ISectionRepository
         [property: JsonPropertyName("hasLuckCheck")] bool HasLuckCheck,
         [property: JsonPropertyName("canEat")] bool CanEat,
         [property: JsonPropertyName("isVictory")] bool IsVictory,
-        [property: JsonPropertyName("isDeath")] bool IsDeath);
+        [property: JsonPropertyName("isDeath")] bool IsDeath,
+        [property: JsonPropertyName("auto")] AutoJson? Auto = null,
+        [property: JsonPropertyName("effects")] List<EffectJson>? Effects = null);
+
+    private sealed record EffectJson(
+        [property: JsonPropertyName("kind")] string Kind,
+        [property: JsonPropertyName("delta")] int Delta = 0,
+        [property: JsonPropertyName("text")] string? Text = null);
+
+    private sealed record AutoJson(
+        [property: JsonPropertyName("kind")] string Kind,
+        [property: JsonPropertyName("diceCount")] int DiceCount = 0,
+        [property: JsonPropertyName("op")] string? Op = null,
+        [property: JsonPropertyName("value")] int Value = 0,
+        [property: JsonPropertyName("onTrue")] int? OnTrue = null,
+        [property: JsonPropertyName("onFalse")] int? OnFalse = null,
+        [property: JsonPropertyName("onSuccess")] int? OnSuccess = null,
+        [property: JsonPropertyName("onFail")] int? OnFail = null,
+        [property: JsonPropertyName("onVisited")] int? OnVisited = null,
+        [property: JsonPropertyName("onFirst")] int? OnFirst = null);
 
     private sealed record ChoiceJson(
         [property: JsonPropertyName("target")] int Target,
