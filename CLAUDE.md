@@ -97,11 +97,17 @@ Unconditional stat/gold/item changes are applied on arrival in `GameService.Move
 (before auto-resolve) via `ApplyAdjustment` — the same code the manual controls use —
 and logged as `effect` steps in `TurnDto.AutoSteps`. Shape:
 `"effects":[{"kind":"endurance","delta":-1},{"kind":"addItem","text":"ключ №12"}]`
-(kinds: agility|endurance|luck|gold|food|addItem|removeItem). Encoded so far (19):
-13,19,26,56,88,89,96,153,163,193,198,223,244,263,291,306,318,326,376.
+(kinds: agility|endurance|luck|gold|food|addItem|removeItem). Encoded so far (33):
+13,19,26,45,56,81,88,89,96,105,119,122,142,153,163,166,177,193,198,199,223,244,254,
+263,271,291,294,306,318,326,346,376,380.
 **Only encode effects with NO "если"/dice/visited condition** — conditional ones stay
 on the manual override. Partial encodes are noted in the patch (§193 skips the
-per-monster gold; §153 skips the unmodelled "+1 to attack" sword bonus). Attributes
+per-monster gold; §153 skips the unmodelled "+1 to attack" sword bonus; §166 skips the
+unconditional "уступаешь бабочку" item loss and §346 the broken молот — item strings are
+player-entered so auto-removal would be an unreliable no-op). Left **manual** because the
+effect is conditional/entangled: §31 (implicit gold, no "возьми"), §162/§284/§315 (ССС/dice),
+§207 (needs заколдованная вода), §350 (first-visit only — a visited-branch, not a flat effect).
+Attributes
 cap at their initial value (via `AttributeScore`); food caps at 8; gold floors at 0.
 
 ### Post-victory continuation for detour battles (`victoryTarget` on a choice)

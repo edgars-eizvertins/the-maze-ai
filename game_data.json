@@ -862,7 +862,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "luck",
+          "delta": 2
+        }
+      ]
     },
     "46": {
       "id": 46,
@@ -1529,7 +1535,17 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": 2
+        },
+        {
+          "kind": "agility",
+          "delta": 1
+        }
+      ]
     },
     "82": {
       "id": 82,
@@ -2001,7 +2017,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": -1
+        }
+      ]
     },
     "106": {
       "id": 106,
@@ -2283,7 +2305,25 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "food",
+          "delta": -1
+        },
+        {
+          "kind": "endurance",
+          "delta": 4
+        },
+        {
+          "kind": "agility",
+          "delta": 1
+        },
+        {
+          "kind": "luck",
+          "delta": 1
+        }
+      ]
     },
     "120": {
       "id": 120,
@@ -2328,7 +2368,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "agility",
+          "delta": 2
+        }
+      ]
     },
     "123": {
       "id": 123,
@@ -2675,7 +2721,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "addItem",
+          "text": "ключ №93"
+        }
+      ]
     },
     "143": {
       "id": 143,
@@ -3135,7 +3187,17 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": 3
+        },
+        {
+          "kind": "agility",
+          "delta": 2
+        }
+      ]
     },
     "167": {
       "id": 167,
@@ -3342,7 +3404,17 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "luck",
+          "delta": 3
+        },
+        {
+          "kind": "addItem",
+          "text": "огненное ядро"
+        }
+      ]
     },
     "178": {
       "id": 178,
@@ -3730,7 +3802,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "gold",
+          "delta": 20
+        }
+      ]
     },
     "200": {
       "id": 200,
@@ -4752,7 +4830,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "gold",
+          "delta": 10
+        }
+      ]
     },
     "255": {
       "id": 255,
@@ -5059,7 +5143,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": -1
+        }
+      ]
     },
     "272": {
       "id": 272,
@@ -5489,7 +5579,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "luck",
+          "delta": 2
+        }
+      ]
     },
     "295": {
       "id": 295,
@@ -6495,7 +6591,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "endurance",
+          "delta": -1
+        }
+      ]
     },
     "347": {
       "id": 347,
@@ -7114,7 +7216,13 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "agility",
+          "delta": 1
+        }
+      ]
     },
     "381": {
       "id": 381,
