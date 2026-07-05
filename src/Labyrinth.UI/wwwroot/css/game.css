@@ -157,3 +157,26 @@ input {
 /* Manual "go to section" control */
 .goto { display: inline-flex; gap: 6px; align-items: center; }
 .goto input { width: 72px; }
+
+/* Blazor's unhandled-error banner. Hidden until Blazor's JS flips it to block on a
+   real error — without this rule (game.css is the only linked stylesheet) it shows
+   permanently. */
+#blazor-error-ui {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 0.6rem 1.25rem 0.7rem;
+    background: var(--danger);
+    color: #fff;
+    box-shadow: 0 -1px 8px rgba(0,0,0,.5);
+}
+#blazor-error-ui .reload { color: #fff; text-decoration: underline; }
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
