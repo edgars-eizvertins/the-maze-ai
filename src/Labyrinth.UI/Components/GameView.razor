@@ -1,5 +1,6 @@
 @* Main play surface: narrative + choices, or the combat panel, or the ending. *@
 @inject GameSession Session
+@implements IDisposable
 
 @if (Turn is not null)
 {
@@ -181,6 +182,12 @@
     private int? _gotoTarget;
 
     private TurnDto? Turn => Session.Turn;
+
+    // GameView reads live session state (Turn, Busy, LastError) directly rather than
+    // via parameters, so it must react to session changes itself — otherwise, on the
+    // login→game transition it renders once while Turn is still null and never updates.
+    protected override void OnInitialized() => Session.OnChange += StateHasChanged;
+    public void Dispose() => Session.OnChange -= StateHasChanged;
 
     private async Task GoTo()
     {
