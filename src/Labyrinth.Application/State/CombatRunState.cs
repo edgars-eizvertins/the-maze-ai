@@ -15,6 +15,12 @@ public sealed class CombatRunState
     public bool Won { get; set; }
     public int RoundCount { get; set; }
 
+    /// <summary>Section to continue to once this battle is won, for detour fights that
+    /// have no printed exit of their own (§238). Set from the entering choice's
+    /// <c>VictoryTarget</c>; surfaced as a "Далее" button. Null when victory ends the
+    /// section normally (the section's own choices apply).</summary>
+    public int? VictorySection { get; set; }
+
     public StoredMonster? Current =>
         CurrentIndex < Monsters.Count ? Monsters[CurrentIndex] : null;
 

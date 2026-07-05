@@ -65,6 +65,15 @@ public sealed class ChoiceContent
 {
     public int Target { get; init; }
     public string Label { get; init; } = "";
+
+    /// <summary>
+    /// For choices that lead into a "detour" battle with no printed exit of its own
+    /// (the shared monster fight §238, reached from §20/§27/§273): the section the book
+    /// tells you to write down and return to after the fight. Carried into the battle
+    /// and surfaced as a "Далее" button once it is won, so the player never has to note
+    /// the number by hand. Null for ordinary choices.
+    /// </summary>
+    public int? VictoryTarget { get; init; }
 }
 
 public sealed class CombatContent

@@ -48,6 +48,11 @@ The parser/enhancer scripts live in the scratchpad (not committed). The enhancer
   "…а потом N") have **no fixed target by design** — reached via the manual "go to
   section" control (`POST /api/game/goto`), not choices. Large parts of the book,
   incl. victory §387, are only reachable through those note-the-number return jumps.
+  **Detour battles** (the shared monster fight §238, reached from §20/§27/§273) also
+  have no printed exit after victory: the onward number lives on the *origin* section
+  (its "avoid" branch — 316/316/103). The choice leading into such a fight carries
+  `victoryTarget` (see below) so the engine shows a **"Далее"** button on the win
+  instead of forcing a manual jump.
 - combat: parses all `NAME NЛ, MВ` (handles OCR `З`→3, `О`→0); multi-monster
   sections 238/277/312; flee target from "бегством … см. N".
 - labels: direction words → "На север/юг/запад/восток"; yes/no; else trimmed phrase.
@@ -98,6 +103,20 @@ and logged as `effect` steps in `TurnDto.AutoSteps`. Shape:
 on the manual override. Partial encodes are noted in the patch (§193 skips the
 per-monster gold; §153 skips the unmodelled "+1 to attack" sword bonus). Attributes
 cap at their initial value (via `AttributeScore`); food caps at 8; gold floors at 0.
+
+### Post-victory continuation for detour battles (`victoryTarget` on a choice)
+
+A few combats are shared "detours" the book reaches from several sections and that
+print **no onward link after victory** — you win, then return to the number you were
+told to write down on the *origin* section. §238 is the case: entered from §20/§27
+(continue at §316) or §273 (continue at §103). To spare the player a manual jump, the
+**choice that leads into the fight** carries `victoryTarget`:
+`{"target":238,"label":"Сразиться","victoryTarget":316}` (in §20/§27; §273 uses 103).
+`GameService.ChooseAsync` stashes it into `CombatRunState.VictorySection` (via
+`CombatService.Begin`); on a won battle `BuildTurn` appends a synthetic **"Далее"**
+choice to that target, and `ChooseAsync` accepts it even though it isn't a printed
+choice. Death/flee clear the battle first, so no button appears there. Encoded so far
+on choices into §238: §20, §27, §273.
 
 ## Build / run / test
 

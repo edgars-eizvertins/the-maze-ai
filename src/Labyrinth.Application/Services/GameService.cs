@@ -54,11 +54,15 @@ public sealed class GameService
         if (state.InCombat) return ServiceResult<TurnDto>.Fail("Сначала заверши битву.");
 
         var current = _sections.Get(state.CurrentSection);
-        if (current.Choices.All(c => c.Target != target))
+        var choice = current.Choices.FirstOrDefault(c => c.Target == target);
+        // A won detour fight (§238) exposes a synthetic "Далее" button to its noted
+        // continuation; accept that target too even though it isn't a printed choice.
+        var isVictoryContinue = state.ActiveCombat is { Finished: true, Won: true, VictorySection: var vs } && vs == target;
+        if (choice is null && !isVictoryContinue)
             return ServiceResult<TurnDto>.Fail("Недопустимый выбор для этого раздела.");
 
         var steps = new List<AutoStepDto>();
-        MoveTo(state, target, steps);
+        MoveTo(state, target, steps, victoryTarget: choice?.VictoryTarget);
         await _store.SaveStateAsync(player, state, ct);
         return ServiceResult<TurnDto>.Ok(BuildTurn(state, autoSteps: steps));
     }
@@ -218,7 +222,7 @@ public sealed class GameService
     }
 
     // ---- Helpers ---------------------------------------------------------
-    private void MoveTo(GameState state, int target, List<AutoStepDto>? log = null, int depth = 0)
+    private void MoveTo(GameState state, int target, List<AutoStepDto>? log = null, int depth = 0, int? victoryTarget = null)
     {
         state.ActiveCombat = null;
         var wasVisited = state.VisitedSections.Contains(target);
@@ -228,7 +232,7 @@ public sealed class GameService
         var section = _sections.Get(target);
         if (section.IsVictory) { state.IsFinished = true; state.Outcome = "victory"; return; }
         if (section.IsDeath) { state.IsFinished = true; state.Outcome = "death"; return; }
-        if (section.Combat is { Monsters.Count: > 0 }) { _combat.Begin(state, section.Combat, target); return; }
+        if (section.Combat is { Monsters.Count: > 0 }) { _combat.Begin(state, section.Combat, target, victoryTarget); return; }
 
         // Apply the section's unconditional stat/gold/item effects automatically.
         foreach (var e in section.Effects)
@@ -325,7 +329,19 @@ public sealed class GameService
         CombatStateDto? combatDto = state.ActiveCombat is null
             ? null
             : state.ActiveCombat.ToDto(rounds ?? []);
-        return new TurnDto(section.ToDto(), state.ToDto(), combatDto, autoSteps ?? []);
+
+        var sectionDto = section.ToDto();
+        // A won detour fight (§238) has no printed exit — surface the noted continuation
+        // the book asks you to return to as a "Далее" button so no manual jump is needed.
+        if (state.ActiveCombat is { Finished: true, Won: true, VictorySection: int next }
+            && sectionDto.Choices.All(c => c.Target != next))
+        {
+            sectionDto = sectionDto with
+            {
+                Choices = [.. sectionDto.Choices, new ChoiceDto(next, "Далее")]
+            };
+        }
+        return new TurnDto(sectionDto, state.ToDto(), combatDto, autoSteps ?? []);
     }
 }
 

@@ -16,14 +16,17 @@ public sealed class CombatService
 
     public CombatService(CombatResolver resolver) => _resolver = resolver;
 
-    /// <summary>Initialise a fresh battle from a section's combat content.</summary>
-    public void Begin(GameState state, CombatContent combat, int sectionId)
+    /// <summary>Initialise a fresh battle from a section's combat content. <paramref
+    /// name="victorySection"/> is the "continue here after winning" target for detour
+    /// fights with no printed exit (§238); null for ordinary battles.</summary>
+    public void Begin(GameState state, CombatContent combat, int sectionId, int? victorySection = null)
     {
         state.ActiveCombat = new CombatRunState
         {
             SectionId = sectionId,
             CanFlee = combat.CanFlee,
             FleeSection = combat.FleeSection,
+            VictorySection = victorySection,
             Monsters = combat.Monsters.Select(m => new StoredMonster
             {
                 Name = m.Name,

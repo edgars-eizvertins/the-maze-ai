@@ -43,7 +43,7 @@ public sealed class JsonSectionRepository : ISectionRepository
         CanEat = j.CanEat,
         IsVictory = j.IsVictory,
         IsDeath = j.IsDeath,
-        Choices = j.Choices.Select(c => new ChoiceContent { Target = c.Target, Label = c.Label }).ToList(),
+        Choices = j.Choices.Select(c => new ChoiceContent { Target = c.Target, Label = c.Label, VictoryTarget = c.VictoryTarget }).ToList(),
         Combat = j.Combat is null ? null : new CombatContent
         {
             CanFlee = j.Combat.CanFlee,
@@ -106,7 +106,8 @@ public sealed class JsonSectionRepository : ISectionRepository
 
     private sealed record ChoiceJson(
         [property: JsonPropertyName("target")] int Target,
-        [property: JsonPropertyName("label")] string Label);
+        [property: JsonPropertyName("label")] string Label,
+        [property: JsonPropertyName("victoryTarget")] int? VictoryTarget = null);
 
     private sealed record CombatJson(
         [property: JsonPropertyName("monsters")] List<MonsterJson> Monsters,

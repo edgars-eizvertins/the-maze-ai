@@ -365,7 +365,8 @@
       "choices": [
         {
           "target": 238,
-          "label": "Однако чудовища тебя настигают и тогда"
+          "label": "Однако чудовища тебя настигают и тогда",
+          "victoryTarget": 316
         },
         {
           "target": 316,
@@ -500,7 +501,8 @@
       "choices": [
         {
           "target": 238,
-          "label": "Сразиться"
+          "label": "Сразиться",
+          "victoryTarget": 316
         },
         {
           "target": 316,
@@ -5078,7 +5080,8 @@
       "choices": [
         {
           "target": 238,
-          "label": "чудовища"
+          "label": "чудовища",
+          "victoryTarget": 103
         },
         {
           "target": 103,
