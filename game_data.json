@@ -1675,7 +1675,17 @@
       "hasLuckCheck": false,
       "canEat": false,
       "isVictory": false,
-      "isDeath": false
+      "isDeath": false,
+      "effects": [
+        {
+          "kind": "gold",
+          "delta": 3
+        },
+        {
+          "kind": "luck",
+          "delta": 2
+        }
+      ]
     },
     "90": {
       "id": 90,

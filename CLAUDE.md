@@ -97,8 +97,8 @@ Unconditional stat/gold/item changes are applied on arrival in `GameService.Move
 (before auto-resolve) via `ApplyAdjustment` — the same code the manual controls use —
 and logged as `effect` steps in `TurnDto.AutoSteps`. Shape:
 `"effects":[{"kind":"endurance","delta":-1},{"kind":"addItem","text":"ключ №12"}]`
-(kinds: agility|endurance|luck|gold|food|addItem|removeItem). Encoded so far (18):
-13,19,26,56,88,96,153,163,193,198,223,244,263,291,306,318,326,376.
+(kinds: agility|endurance|luck|gold|food|addItem|removeItem). Encoded so far (19):
+13,19,26,56,88,89,96,153,163,193,198,223,244,263,291,306,318,326,376.
 **Only encode effects with NO "если"/dice/visited condition** — conditional ones stay
 on the manual override. Partial encodes are noted in the patch (§193 skips the
 per-monster gold; §153 skips the unmodelled "+1 to attack" sword bonus). Attributes
